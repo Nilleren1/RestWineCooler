@@ -115,3 +115,86 @@ namespace WineCoolerLib
         }
     }
 }
+
+
+________________________________________________________________________________________________________________________________________________________________
+
+using Microsoft.VisualStudio.TestTools.UnitTesting;
+using WineCoolerLib;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace WineCoolerLib.Tests
+{
+    [TestClass()]
+    public class CoolerTests
+    {
+        [TestMethod()]
+        public void CoolerIsNotFull()
+        {
+            //Arrange
+            Cooler cooler = new Cooler(25, 14, 4);
+
+            //Act
+            bool result = cooler.CoolerIsFull();
+
+            //Assert
+            Assert.AreEqual(false, result);
+        }
+
+        [TestMethod()]
+        public void CoolerIsFull()
+        {
+            //Arrange
+            Cooler cooler = new Cooler(25, 14, 25);
+
+            //Act
+            bool result = cooler.CoolerIsFull();
+
+            //Assert
+            Assert.AreEqual(true, result);
+        }
+
+        [TestMethod()]
+        public void CoolerModelException()
+        {
+            //Arrange
+            Cooler cooler = new Cooler(25, 14, 23);
+
+            //Act
+            //cooler.CoolerIsFull();
+
+            //Assert
+            Assert.ThrowsException<ArgumentOutOfRangeException>(() => cooler.BottlesInStorage = 26);
+        }
+
+        [TestMethod()]
+        public void AddWineTest()
+        {
+            //Arrange
+            Cooler cooler = new Cooler(25, 14, 24);
+
+            //Act
+            cooler.AddWine();
+
+            //Assert
+            Assert.AreEqual(25, cooler.BottlesInStorage);
+        }
+
+        [TestMethod()]
+        public void AddWineTestException()
+        {
+            //Arrange
+            Cooler cooler = new Cooler(25, 14, 25);
+
+            //Act
+            //cooler.AddWine();
+
+            //Assert
+            Assert.ThrowsException<ArgumentException>(() => cooler.AddWine());
+        }
+    }
+}
